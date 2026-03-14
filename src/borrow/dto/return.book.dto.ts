@@ -1,9 +1,8 @@
 import { IsInt } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class BorrowBookDto {
+export class ReturnBookDto {
+  @ApiProperty({ example: 1 })
   @IsInt()
-  userId: number;
-
-  @IsInt()
-  bookId: number;
+  recordId: number;
 }
