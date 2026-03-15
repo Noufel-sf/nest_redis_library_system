@@ -55,6 +55,9 @@ export class UserSummaryDto {
 
   @ApiProperty({ example: 'jane@example.com' })
   email: string;
+
+  @ApiProperty({ example: 'user', enum: ['user', 'admin'] })
+  role: string;
 }
 
 export class AuthorDetailDto extends AuthorSummaryDto {

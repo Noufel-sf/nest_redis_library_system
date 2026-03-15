@@ -32,6 +32,7 @@ export class UsersController {
         id: { type: 'number', example: 1 },
         name: { type: 'string', example: 'Jane Doe' },
         email: { type: 'string', example: 'jane@example.com' },
+        role: { type: 'string', example: 'user', enum: ['user', 'admin'] },
       },
     },
   })
@@ -50,6 +51,7 @@ export class UsersController {
           id: { type: 'number', example: 1 },
           name: { type: 'string', example: 'Jane Doe' },
           email: { type: 'string', example: 'jane@example.com' },
+          role: { type: 'string', example: 'user', enum: ['user', 'admin'] },
           borrowed: {
             type: 'array',
             items: {
@@ -90,6 +92,7 @@ export class UsersController {
         id: { type: 'number', example: 1 },
         name: { type: 'string', example: 'Jane Doe' },
         email: { type: 'string', example: 'jane@example.com' },
+        role: { type: 'string', example: 'user', enum: ['user', 'admin'] },
         borrowed: {
           type: 'array',
           items: {
@@ -129,6 +132,7 @@ export class UsersController {
         id: { type: 'number', example: 1 },
         name: { type: 'string', example: 'Jane Doe' },
         email: { type: 'string', example: 'jane@example.com' },
+        role: { type: 'string', example: 'user', enum: ['user', 'admin'] },
       },
     },
   })
@@ -146,6 +150,7 @@ export class UsersController {
         id: { type: 'number', example: 1 },
         name: { type: 'string', example: 'Jane Doe' },
         email: { type: 'string', example: 'jane@example.com' },
+        role: { type: 'string', example: 'user', enum: ['user', 'admin'] },
       },
     },
   })
