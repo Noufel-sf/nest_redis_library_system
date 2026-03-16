@@ -9,6 +9,7 @@ import {
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { JwtAuthGuard } from './guards/jwt.auth.gaurd';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { Roles } from './decorators/roles.decorator';
@@ -27,11 +28,28 @@ export class AuthController {
       type: 'object',
       properties: {
         access_token: { type: 'string' },
+        refresh_token: { type: 'string' },
       },
     },
   })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Post('refresh')
+  @Throttle({ default: { limit: 10, ttl: 60_000 } })
+  @ApiOperation({ summary: 'Refresh access token using refresh token' })
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: {
+        access_token: { type: 'string' },
+        refresh_token: { type: 'string' },
+      },
+    },
+  })
+  refresh(@Body() dto: RefreshTokenDto) {
+    return this.authService.refresh(dto);
   }
 
   @Get('profile')
@@ -70,5 +88,21 @@ export class AuthController {
   @ApiForbiddenResponse({ description: 'Insufficient role' })
   adminOnly() {
     return { message: 'Welcome admin' };
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Logout and revoke refresh token' })
+  @ApiOkResponse({
+    schema: {
+      type: 'object',
+      properties: {
+        message: { type: 'string', example: 'Logged out successfully' },
+      },
+    },
+  })
+  logout(@CurrentUser() user: { userId: number }) {
+    return this.authService.logout(user.userId);
   }
 }
